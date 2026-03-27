@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "skills": {
+    "content-design": {
+      "source": "n8n-io/n8n",
+      "sourceType": "github",
+      "computedHash": "53045f16edbc545891334c3821a1a587f144546c085fafe992594183161ebc07"
+    },
+    "django-patterns": {
+      "source": "affaan-m/everything-claude-code",
+      "sourceType": "github",
+      "computedHash": "b1477691a59a4ed4cc4fa2180cec057537857455c537ad6d87f6c68340ab07f3"
+    },
+    "django-security": {
+      "source": "affaan-m/everything-claude-code",
+      "sourceType": "github",
+      "computedHash": "9c84b8260f3829f8930a472bca1cd4978f97af94d3639cca8ab3cd5578df674a"
+    }
+  }
+}

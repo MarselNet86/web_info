@@ -31,6 +31,7 @@ def get_news(request):
                 'source': article.get('source', {}).get('name'),
                 'publishedAt': article.get('publishedAt'),
                 'url': article.get('url'),
+                'urlToImage': article.get('urlToImage'),
             }
             for article in articles if article.get('title') and article.get('title') != '[Removed]'
         ]

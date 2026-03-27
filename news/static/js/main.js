@@ -14,11 +14,14 @@ function renderSkeletons() {
     for (let i = 0; i < 6; i++) {
         const skeletonHtml = `
             <div class="note-item">
-                <div class="skeleton skeleton-meta"></div>
-                <div class="skeleton skeleton-title"></div>
-                <div class="skeleton skeleton-title" style="width: 60%;"></div>
-                <div class="skeleton skeleton-text" style="width: 90%; margin-top: 10px;"></div>
-                <div class="skeleton skeleton-text" style="width: 70%;"></div>
+                <div style="display: flex; gap: 12px;">
+                    <div class="skeleton skeleton-thumbnail"></div>
+                    <div style="flex: 1;">
+                        <div class="skeleton skeleton-meta"></div>
+                        <div class="skeleton skeleton-title"></div>
+                        <div class="skeleton skeleton-title" style="width: 60%;"></div>
+                    </div>
+                </div>
             </div>
         `;
         newsList.innerHTML += skeletonHtml;
@@ -65,13 +68,22 @@ function renderNewsList(articles) {
         item.className = 'note-item';
         item.dataset.index = index;
         
+        const thumbnailHtml = article.urlToImage 
+            ? `<img src="${article.urlToImage}" class="note-thumbnail" alt="News thumbnail" onerror="this.style.display='none'">`
+            : `<div class="note-thumbnail-placeholder"></div>`;
+
         item.innerHTML = `
-            <div class="note-meta">
-                <span>${article.source || 'News'}</span>
-                <span>${formatDate(article.publishedAt)}</span>
+            <div style="display: flex; gap: 12px;">
+                ${thumbnailHtml}
+                <div style="flex: 1; overflow: hidden;">
+                    <div class="note-meta">
+                        <span>${article.source || 'News'}</span>
+                        <span>${formatDate(article.publishedAt)}</span>
+                    </div>
+                    <div class="note-title">${article.title}</div>
+                    <div class="note-preview">${article.description || 'No description available.'}</div>
+                </div>
             </div>
-            <div class="note-title">${article.title}</div>
-            <div class="note-preview">${article.description || 'No description available.'}</div>
         `;
         
         item.addEventListener('click', () => selectArticle(index));
@@ -92,9 +104,14 @@ function selectArticle(index) {
     mainTitle.textContent = article.title;
     mainMeta.textContent = `${article.source || 'Unknown'} • ${formatDate(article.publishedAt)}`;
     
+    const bannerHtml = article.urlToImage 
+        ? `<img src="${article.urlToImage}" class="main-article-image" alt="Article image" onerror="this.style.display='none'">` 
+        : '';
+
     // Render content
     mainContent.innerHTML = `
-        <p>${article.description || 'No detailed description available.'}</p>
+        ${bannerHtml}
+        <p style="margin-top: 16px;">${article.description || 'No detailed description available.'}</p>
         ${article.url ? `<a href="${article.url}" target="_blank" class="read-more-btn">Read Full Article</a>` : ''}
     `;
 }
@@ -103,8 +120,6 @@ tabs.forEach(tab => {
     tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        
-        // Keep z-index logic if needed or handled purely via css state
         
         currentCategory = tab.dataset.category;
         sidebarTitle.textContent = `${currentCategory} News`;

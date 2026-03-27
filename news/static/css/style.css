@@ -1,0 +1,308 @@
+:root {
+    --bg-canvas: #EAEAE6;      
+    --bg-tab-inactive-1: #CED7DE; 
+    --bg-tab-inactive-2: #94A3B0; 
+    --bg-app-frame: #D8E6F3;    
+    
+    --text-main: #111111;
+    --text-secondary: #555555;
+    
+    --border-color: #000000;
+    --border-width: 1px;
+    
+    --radius-tab: 12px;
+    --radius-card: 16px;
+    
+    --space-xs: 8px;
+    --space-s: 16px;
+    --space-m: 24px;
+    --space-l: 32px;
+    
+    --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-app-frame);
+    color: var(--text-main);
+    font-family: var(--font-family);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+.app-window {
+    width: 95vw;
+    height: 90vh;
+    max-width: 1400px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.tabs-container {
+    display: flex;
+    align-items: flex-end;
+    padding-left: 20px;
+    height: 48px;
+    position: relative;
+    z-index: 10;
+}
+
+.tab {
+    padding: 12px 32px 10px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--text-main);
+    background-color: var(--bg-tab-inactive-2);
+    border-radius: var(--radius-tab) var(--radius-tab) 0 0;
+    margin-right: -12px; 
+    cursor: pointer;
+    position: relative;
+    box-shadow: -1px 0 0 rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, background-color 0.2s;
+    clip-path: polygon(10% 0, 90% 0, 100% 100%, 0% 100%);
+    min-width: 140px;
+    text-align: center;
+}
+
+.tab:nth-child(2) {
+    background-color: var(--bg-tab-inactive-1);
+    z-index: 2;
+}
+
+.tab.active {
+    background-color: var(--bg-canvas);
+    z-index: 3;
+    padding-bottom: 12px; 
+    font-weight: 600;
+}
+
+.tab:hover:not(.active) {
+    transform: translateY(-2px);
+}
+
+.app-body {
+    background-color: var(--bg-canvas);
+    flex: 1;
+    border-radius: 12px; 
+    border-top-left-radius: 0; 
+    position: relative;
+    z-index: 5;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.sidebar {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    border-right: var(--border-width) solid var(--border-color);
+    background-color: var(--bg-canvas);
+    flex-shrink: 0;
+}
+
+.main-editor {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: var(--bg-canvas);
+}
+
+.sidebar-header {
+    padding: var(--space-m);
+    border-bottom: var(--border-width) solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar-title {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-transform: capitalize;
+}
+
+.icon-btn {
+    width: 28px;
+    height: 28px;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.icon-btn:hover {
+    border-color: var(--border-color);
+    background-color: rgba(255,255,255,0.5);
+}
+
+.note-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-s) 0;
+}
+
+.note-item {
+    padding: var(--space-s) var(--space-m);
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: background 0.15s;
+}
+
+.note-item:hover {
+    background-color: rgba(0,0,0,0.03);
+}
+
+.note-item.selected {
+    border-left-color: var(--text-main);
+    background-color: rgba(0,0,0,0.05);
+}
+
+.note-meta {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.note-title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: var(--text-main);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+
+.note-preview {
+    font-size: 13px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+}
+
+.editor-header {
+    padding: var(--space-l) var(--space-l) var(--space-m);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.editor-meta {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.editor-title {
+    width: 100%;
+    font-size: 32px;
+    font-weight: 400; 
+    color: var(--text-main);
+    font-family: var(--font-family);
+    letter-spacing: -0.01em;
+    margin-bottom: var(--space-m);
+}
+
+.editor-content {
+    flex: 1;
+    padding: 0 var(--space-l) var(--space-l);
+    overflow-y: auto;
+    max-width: 800px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-main);
+}
+
+.read-more-btn {
+    display: inline-block;
+    margin-top: var(--space-l);
+    padding: 10px 20px;
+    background: var(--text-main);
+    color: var(--bg-canvas);
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+
+.read-more-btn:hover {
+    opacity: 0.8;
+}
+
+.refresh-icon {
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+}
+
+.refresh-icon:hover {
+    transform: rotate(180deg);
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #CCC;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #BBB;
+}
+
+/* Skeleton Loading Styles */
+.skeleton {
+    background-color: #d1d5db;
+    animation: pulse-bg 1.5s infinite;
+}
+.skeleton-text {
+    height: 10px;
+    border-radius: 4px;
+    margin-bottom: 6px;
+}
+.skeleton-title {
+    height: 16px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    width: 80%;
+}
+.skeleton-meta {
+    height: 10px;
+    width: 40%;
+    border-radius: 4px;
+    margin-bottom: 6px;
+}
+
+@keyframes pulse-bg {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
